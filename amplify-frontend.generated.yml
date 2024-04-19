@@ -1,0 +1,25 @@
+version: 1
+applications:
+    -
+        frontend:
+            phases:
+                preBuild:
+                    commands: ['npx pnpm install']
+                build:
+                    commands: ['npx pnpm --filter vite-react build']
+            artifacts:
+                baseDirectory: apps/vite-react
+                files:
+                    - '**/*'
+            cache:
+                paths:
+                    - 'node_modules/**/*'
+            buildPath: /
+        appRoot: apps/vite-react
+frontend:
+    phases:
+        build:
+            commands:
+                - 'pnpm run build'
+    artifacts:
+        baseDirectory: dist
