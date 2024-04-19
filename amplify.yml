@@ -32,6 +32,10 @@ applications:
           commands:
             - corepack enable
             - pnpm install
+            # we need amplifyconfiguration.json
+            - cd ../../packages/vanity-usernames-backend
+            - pnpm amplify generate config --app-id d17dx4lzoo3ddq --branch $AWS_BRANCH
+            - cd -
         build:
           commands:
             - pnpm run build
