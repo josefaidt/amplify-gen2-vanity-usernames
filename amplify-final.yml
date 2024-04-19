@@ -32,8 +32,6 @@ applications:
           commands:
             - corepack enable
             - pnpm install
-            # we need amplifyconfiguration.json
-            - pnpm amplify generate config --app-id d17dx4lzoo3ddq --branch $AWS_BRANCH
         build:
           commands:
             - pnpm run build
