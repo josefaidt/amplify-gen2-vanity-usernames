@@ -1,0 +1,43 @@
+version: 1
+applications:
+  - appRoot: packages/vanity-usernames-backend
+    backend:
+      phases:
+        preBuild:
+          commands:
+            - corepack enable
+            - pnpm install
+        build:
+          commands:
+            - pnpm amplify pipeline-deploy --branch $AWS_BRANCH --app-id $AWS_APP_ID
+    frontend:
+      phases:
+        build:
+          commands:
+            - mkdir dist && touch dist/index.html
+      artifacts:
+        baseDirectory: dist
+        files:
+          - "**/*"
+      cache:
+        paths:
+          - "node_modules/.pnpm/**/*"
+      buildPath: /
+  - appRoot: apps/vite-react
+    frontend:
+      phases:
+        preBuild:
+          commands:
+            - corepack enable
+            - pnpm install
+        build:
+          commands:
+            - pnpm run build
+      artifacts:
+        baseDirectory: dist
+        files:
+          - "**/*"
+      cache:
+        paths:
+          - "node_modules/.pnpm/**/*"
+      buildPath: /
